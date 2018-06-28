@@ -114,7 +114,10 @@ function randBias(num) {
 function update() {
     var newPop = [];
 
-    newPop.push(population[0]);
+    for (var i = 0; i < num * 0.02; i++) {
+        newPop.push(population[i]);
+    }
+    
     newPop.push(new Route(num));
 
     while (newPop.length < popsize) {
