@@ -21,6 +21,37 @@ function Canvas(id) {
         this.ctx.strokeRect(x, y, w, h);
     }
 
+    this.fillCRect = function(x, y, w, h) {
+        this.ctx.fillRect(x - w/2, y - h/2, w, h);
+    }
+
+    this.strokeCRect = function(x, y, w, h) {
+        this.ctx.strokeRect(x - w/2, y - h/2, w, h);
+    }
+
+    this.fillArc = function(x, y, w, h, rotation, start, end) {
+        this.ctx.beginPath();
+        h = h || w;
+        this.ctx.ellipse(x, y, w, h, rotation || 0,
+            start || 0, end || 2 * Math.PI);
+        this.ctx.fill();
+    }
+
+    this.strokeArc = function(x, y, w, h, rotation, start, end) {
+        this.ctx.beginPath();
+        h = h || w;
+        this.ctx.ellipse(x, y, w, h, rotation || 0,
+            start || 0, end || 2 * Math.PI);
+        this.ctx.stroke();
+    }
+
+    this.line = function(x1, y1, x2, y2) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(x1, y1);
+        this.ctx.lineTo(x2, y2);
+        this.ctx.stroke();
+    }
+
     this.background = function() {
         this.ctx.fillRect(0, 0, this.width, this.height);
     }
