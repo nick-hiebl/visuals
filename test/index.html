@@ -1,6 +1,31 @@
 <title>Test</title>
-<canvas id="canvas" width="400" height="400"></canvas>
-<canvas id="that" width="400" height="400"></canvas>
+<div style="max-width: 100%; width: 1208px; margin: auto">
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <canvas id="that" width="400" height="400"></canvas>
+    <canvas id="mst" width="400" height="400"></canvas>
+</div>
 <script type="text/javascript" src="../visual.js"></script>
 <script type="text/javascript" src="this.js"></script>
 <script type="text/javascript" src="that.js"></script>
+<script type="text/javascript" src="approx.js"></script>
+<div style="min-width: 400px; margin: auto; width: 50%">
+    <p>The three respective panels show:</p>
+    <ul>
+        <li>
+            The best route found so far via a genetic algorithm search.
+        </li>
+        <li>A random variation considered in the genetic algorithm.</li>
+        <li>
+            A 2-approximation produced via a MST method. The green lines
+            represent some edges of the MST, however many are covered by
+            edges used in the route.
+        </li>
+    </ul>
+    <p>
+        The fact that the third panel shows a 2-approximation is quite
+        significant. Its score must be within a factor or 2 of the
+        optimal Traveling Salesperson route, so it can be used to
+        approximate the effectiveness of the route found by the genetic
+        search.
+    </p>
+</div>
