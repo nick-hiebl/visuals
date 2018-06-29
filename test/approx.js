@@ -105,6 +105,6 @@ function draw() {
     for (var i = 0; i < num; i++) {
         approxCanvas.fillArc(points[i].x, points[i].y, i == 0 ? 8 : 4);
     }
-    approxCanvas.color('green');
+    
     approxCanvas.ctx.fillText(total.toLocaleString(), 5, 15);
 }
