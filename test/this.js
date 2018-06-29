@@ -85,7 +85,7 @@ function dist(a, b) {
 var popsize = 500;
 var population = [];
 
-var num = 120;
+var num = 150;
 var points = [];
 
 function setup() {
@@ -93,7 +93,8 @@ function setup() {
     canvas.background();
 
     for (var i = 0; i < num; i++) {
-        points.push({x: Math.random() * 400, y: Math.random() * 400});
+        points.push({x: 20 + Math.random() * 360,
+            y: 20 + Math.random() * 360});
     }
 
     console.log(points);
@@ -104,6 +105,7 @@ function setup() {
 
     setupThat();
     addUpdate(update);
+    setupApprox();
 }
 
 function randBias(num) {
@@ -117,7 +119,7 @@ function update() {
     for (var i = 0; i < num * 0.02; i++) {
         newPop.push(population[i]);
     }
-    
+
     newPop.push(new Route(num));
 
     while (newPop.length < popsize) {
@@ -148,17 +150,21 @@ function update() {
 
     canvas.lineWidth(2);
     let best = population[0];
+
+    let total = 0;
     for (var i = 0; i < num - 1; i++) {
         let c1 = points[best.route[i]];
         let c2 = points[best.route[i+1]];
+        total += dist(c1, c2);
 
         canvas.line(c1.x, c1.y, c2.x, c2.y);
     }
 
     let c1 = points[best.route[0]];
     let c2 = points[best.route[num - 1]];
+    total += dist(c1, c2);
 
-    canvas.line(c1.x, c1.y, c2.x, c2.y);
+    canvas.ctx.fillText(total.toLocaleString(), 5, 15);
 }
 
 addSetup(setup);
