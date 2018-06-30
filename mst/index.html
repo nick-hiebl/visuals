@@ -18,16 +18,16 @@
         </li>
     </ul>
     <p>
-        It's worth noting that this is not a fair indicator of the
-        relative speeds of each algorithm. I've allowed very different
-        operations per frame in each algorithm purely for demonstration
-        purposes. In each frame the Kruskal's algorithm simply considers
-        one edge in its edgelist. On the other hand Prim's only looks at
-        a single non-connected node to see if it is closer than any
-        other node it has seen so far. This seems somewhat fair at face
-        value, but Kruskal's has already had an incredibly costly sort
-        applied to its edgelist and has a very heavy memory usage, as it
-        must store every single edge in the graph and then sort it.
+        It's worth noting that this is a poor indicator of the relative
+        speeds of each algorithm. I've allowed very different operations
+        per frame in each algorithm purely for demonstration purposes.
+        In each frame the Kruskal's algorithm simply considers one edge
+        in its edgelist. On the other hand Prim's only looks at a single
+        non-connected node to see if it is closer than any other node it
+        has seen so far. This seems somewhat fair at face value, but
+        Kruskal's has already had an incredibly costly sort applied to
+        its edgelist and has a very heavy memory usage, as it must store
+        every single edge in the graph and then sort it.
     </p>
     <p>
         Both algorithms are quite effective and run in O(E log E) for
