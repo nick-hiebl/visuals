@@ -29,30 +29,34 @@ function updatePrim() {
         }
     }
     if (considering.node >= num) {
-        pEdges.push({a: bestEdge.a, b: bestEdge.b});
+        pEdges.push({a: bestEdge.node, b: bestEdge.edge});
         connected[bestEdge.b] = true;
         bestEdge = {node: 0, edge: 1, dist: 10000};
         considering.edge = 0;
-        considering.node = 0;
+        considering.node = 1;
     }
 
     d = dist(points[considering.edge], points[considering.node]);
-    if (d < bestEdge.dist) {
+    if (!connected[considering.other] && d < bestEdge.dist) {
         bestEdge = {node: considering.node, edge: considering.edge,
             dist: d};
     }
 
-    bestEdge = {a: considering.edge, b: considering.node};
     if (bestEdge != undefined) {
         pCanvas.color('red');
-        pCanvas.line(points[bestEdge.a].x, points[bestEdge.a].y,
-            points[bestEdge.b].x, points[bestEdge.b].y);
+        pCanvas.line(points[bestEdge.node].x,
+            points[bestEdge.node].y,
+            points[bestEdge.edge].x,
+            points[bestEdge.edge].y);
     }
 
     pCanvas.color('white');
 
     for (var e of pEdges) {
-        pCanvas.line(points[e.a].x, points[e.a].y, points[e.b].x, points[e.b].y);
+        pCanvas.line(points[e.a].x,
+            points[e.a].y,
+            points[e.b].x,
+            points[e.b].y);
     }
 
     for (var p of points) {
