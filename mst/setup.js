@@ -1,5 +1,5 @@
 var points = [];
-var num = 50;
+var num = 160;
 
 function dist(a, b) {
     return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
@@ -7,8 +7,8 @@ function dist(a, b) {
 
 function setup() {
     for (var i = 0; i < num; i++) {
-        points.push({x: Math.random() * 360 + 20,
-            y: Math.random() * 360 + 20});
+        points.push({x: Math.random() * 560 + 20,
+            y: Math.random() * 560 + 20});
     }
 
     setupKruskal();
