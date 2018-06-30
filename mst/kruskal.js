@@ -3,6 +3,10 @@ var edges = [];
 var potentialEdges = [];
 var kCanvas;
 
+var longN;
+var longO;
+var nConsidered;
+
 function get_root(x) {
     if (parent[x] == x) return x;
     let root = get_root(parent[x]);
@@ -36,30 +40,32 @@ function setupKruskal() {
         return b.dist - a.dist;
     });
 
-    // while (edges.length < (num - 1)) {
-    //     var nextEdge = potentialEdges.pop();
-    //     if (get_root(nextEdge.a) != get_root(nextEdge.b)) {
-    //         edges.push(nextEdge);
-    //         merge(nextEdge.a, nextEdge.b);
-    //         neighbours[nextEdge.a].push(nextEdge.b);
-    //         neighbours[nextEdge.b].push(nextEdge.a);
-    //     }
-    // }
-    // Ideally empty up some memory
-    // potentialEdges = [];
+    nConsidered = 0;
+
+    longN = 0;
+    longO = -1;
 
     updateKruskal();
 }
 
 function updateKruskal() {
     var nextEdge;
-    if (edges.length < (num - 1)) {
-        nextEdge = potentialEdges.pop();
-        if (get_root(nextEdge.a) != get_root(nextEdge.b)) {
-            edges.push(nextEdge);
-            merge(nextEdge.a, nextEdge.b);
-            neighbours[nextEdge.a].push(nextEdge.b);
-            neighbours[nextEdge.b].push(nextEdge.a);
+    if (longN < num) {
+        nConsidered += longO + 5 > longN ? longN - longO : 5;
+        longO += 5;
+        if (longO >= longN) {
+            longO = 0;
+            longN++;
+        }
+    } else {
+        if (edges.length < (num - 1)) {
+            nextEdge = potentialEdges.pop();
+            if (get_root(nextEdge.a) != get_root(nextEdge.b)) {
+                edges.push(nextEdge);
+                merge(nextEdge.a, nextEdge.b);
+                neighbours[nextEdge.a].push(nextEdge.b);
+                neighbours[nextEdge.b].push(nextEdge.a);
+            }
         }
     }
 
@@ -68,10 +74,17 @@ function updateKruskal() {
 
     kCanvas.lineWidth(2);
 
-    if (nextEdge) {
+    if (longN < num) {
         kCanvas.color('red');
-        kCanvas.line(points[nextEdge.a].x, points[nextEdge.a].y,
-            points[nextEdge.b].x, points[nextEdge.b].y);
+        kCanvas.fillRect(5, 5, (600 - 10) * (nConsidered)/(num*(num-1)/2), 5);
+        kCanvas.line(points[longN].x, points[longN].y,
+            points[longO].x, points[longO].y);
+    } else {
+        if (nextEdge) {
+            kCanvas.color('red');
+            kCanvas.line(points[nextEdge.a].x, points[nextEdge.a].y,
+                points[nextEdge.b].x, points[nextEdge.b].y);
+            }
     }
 
     kCanvas.color('white');
