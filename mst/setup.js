@@ -1,5 +1,5 @@
 var points = [];
-var num = 160;
+var num = 360;
 
 function dist(a, b) {
     return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
