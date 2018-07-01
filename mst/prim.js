@@ -23,48 +23,52 @@ function updatePrim() {
     pCanvas.color('black');
     pCanvas.background();
 
-    if (pEdges.length < (num - 1)) {
-        pCanvas.lineWidth(1);
-        pCanvas.color('green');
-        for (var n = 0; n < num; n++) {
-            if (!connected[n]) {
-                pCanvas.line(points[n].x, points[n].y,
-                    points[from[n]].x, points[from[n]].y);
-            }
-        }
-
-        while (considering < num && connected[considering]) {
-            considering++;
-        }
-
-        if (considering >= num) {
-            connected[nextBest] = true;
-            pEdges.push({a: from[nextBest], b: nextBest});
-            considering = 0;
+    for (var m = 0; m < 5; m++) {
+        if (pEdges.length < (num - 1)) {
+            pCanvas.lineWidth(1);
+            pCanvas.color('green');
             for (var n = 0; n < num; n++) {
-                let d = dist(points[nextBest], points[n]);
-                if (d < cheapest[n]) {
-                    cheapest[n] = d;
-                    from[n] = nextBest;
+                if (m == 0) {
+                    if (!connected[n]) {
+                        pCanvas.line(points[n].x, points[n].y,
+                            points[from[n]].x, points[from[n]].y);
+                    }
                 }
             }
-        } else {
-            if (!connected[considering]) {
-                let d = dist(points[considering],
-                    points[from[considering]]);
-                if (connected[nextBest] || d < cheapest[nextBest]) {
-                    nextBest = considering;
-                }
+
+            while (considering < num && connected[considering]) {
+                considering++;
             }
-            pCanvas.color('red');
-            pCanvas.lineWidth(2);
-            pCanvas.line(points[considering].x,
+
+            if (considering >= num) {
+                connected[nextBest] = true;
+                pEdges.push({a: from[nextBest], b: nextBest});
+                considering = 0;
+                for (var n = 0; n < num; n++) {
+                    let d = dist(points[nextBest], points[n]);
+                    if (d < cheapest[n]) {
+                        cheapest[n] = d;
+                        from[n] = nextBest;
+                    }
+                }
+            } else {
+                if (!connected[considering]) {
+                    let d = dist(points[considering],
+                        points[from[considering]]);
+                    if (connected[nextBest] || d < cheapest[nextBest]) {
+                        nextBest = considering;
+                    }
+                }
+                pCanvas.color('red');
+                pCanvas.lineWidth(2);
+                pCanvas.line(points[considering].x,
                 points[considering].y, points[from[considering]].x,
                 points[from[considering]].y);
-            pCanvas.color('green');
-            pCanvas.fillArc(points[nextBest].x,
-                points[nextBest].y, 9);
-            considering++;
+                pCanvas.color('#3af');
+                pCanvas.fillArc(points[nextBest].x,
+                    points[nextBest].y, 9);
+                    considering++;
+            }
         }
     }
 
