@@ -1,3 +1,11 @@
+function sqr(x) {
+    return x * x;
+}
+
+function map(x, a, b, c, d) {
+    return (x - a) * (d - c) / (b - a) + c
+}
+
 class Vector {
     constructor(x = 0, y = 0) {
         this.x = x;
