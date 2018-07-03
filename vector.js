@@ -17,7 +17,7 @@ class Vector {
     }
 
     static randUnit() {
-        return new Vector(1, 0).rotate(random(0, 2 * Math.PI));
+        return new Vector(1, 0).rotate(Math.random() * 2 * Math.PI);
     }
 
     add(other) {
@@ -78,6 +78,10 @@ class Vector {
         var h = this.heading;
         this.rotate(target - h);
         return this.heading;
+    }
+
+    dot(other) {
+        return this.x * other.x + this.y * other.y;
     }
 
     dist(other) {
