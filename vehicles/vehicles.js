@@ -59,7 +59,9 @@ function aggression(target, vehicle) {
 
 function fear(target, vehicle) {
     if (target.magnitude > 150) {
-        return Vector.randUnit();
+        var v = Vector.randUnit();
+        v.mul(5);
+        return v;
     }
     var desired = target.copy();
     desired.magnitude = map(target.magnitude, 0, 400, -SPEED_LIMIT, 0);
@@ -118,7 +120,10 @@ function draw() {
         canvas.color('red');
         canvas.fillArc(source.x, source.y, 5);
         canvas.color('white');
-        canvas.fillArc(vehicle.pos.x, vehicle.pos.y, 10);
+        canvas.fillArc(vehicle.pos.x, vehicle.pos.y, 5);
+        canvas.lineWidth(2);
+        canvas.line(vehicle.pos.x, vehicle.pos.y,
+            vehicle.pos.x + 4 * vehicle.vel.x, vehicle.pos.y + 4 * vehicle.vel.y);
     }
 }
 
