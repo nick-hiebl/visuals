@@ -17,7 +17,7 @@ function newVehicle() {
 function setup() {
     canvases = [new Canvas('seek'), new Canvas('aggression'), new Canvas('fear'), new Canvas('explore')];
     vehicles = [newVehicle(), newVehicle(), newVehicle(), newVehicle()];
-    actions = [seek, aggression, fear, explore];
+    actions = [seek, aggression, fear, observe];
 
     source = new Vector(200, 200);
     coolOff = 0;
@@ -72,6 +72,31 @@ function fear(target, vehicle) {
 function explore(target, vehicle) {
     var desired = target.copy();
     desired.magnitude = map(target.magnitude, 0, 400, 0, -SPEED_LIMIT);
+
+    return desired;
+}
+
+function observe(target, vehicle) {
+    var desired = target.copy();
+    desired.heading += 0;
+    var mag = desired.magnitude * SPEED_LIMIT + 0.01;
+    var mul = map(desired.dot(vehicle.vel), -mag, mag, -SPEED_LIMIT, SPEED_LIMIT);
+    desired.mul(mul);
+    var v = Vector.randUnit();
+    // v.mul(5);
+    desired.add(v);
+
+    var offset = target.copy();
+    offset.heading += Math.PI/2;
+    offset.magnitude = SPEED_LIMIT/3;
+
+    desired.mul(map(target.magnitude, 0, 400, -SPEED_LIMIT/8, SPEED_LIMIT));
+
+    desired.add(offset);
+
+    if (desired.magnitude > SPEED_LIMIT) {
+        desired.magnitude = SPEED_LIMIT;
+    }
 
     return desired;
 }
