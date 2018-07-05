@@ -3,13 +3,27 @@ var canvas;
 var dino;
 
 var offset;
-
 var last;
 
-var speed = 6;
 var jumpDistance = 50;
+var heightFactor = 3;
+
+var speed = 6;
 var jumpVelocity = 12;
 var gravity = 0.625;
+
+function distance(obstacle) {
+    return jumpDistance + Math.floor(heightFactor * Math.sqrt(obstacle.h));
+}
+
+function pressUp(dinosaur, obstacles) {
+    for (var o of obstacles) {
+        if (dino.x < o.x && dino.x + distance(o) >= o.x) {
+            return true;
+        }
+    }
+    return false;
+}
 
 function setup() {
     initGame();
@@ -62,13 +76,13 @@ function update() {
         dino.y = 0;
         dino.vy = 0;
     }
-    if (dino.y == 0) {
-        for (var o of obstacles) {
-            if (dino.x < o.x && dino.x + jumpDistance >= o.x) {
-                dino.vy -= jumpVelocity;
-                break;
-            }
+    if (pressUp(dino, obstacles)) {
+        if (dino.y == 0) {
+            dino.vy -= jumpVelocity;
         }
+    }
+    if (dino.y == 0) {
+
     }
 
     draw();
