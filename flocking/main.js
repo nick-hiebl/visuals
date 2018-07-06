@@ -95,6 +95,7 @@ function update() {
 }
 
 function draw() {
+    var mul = document.getElementById("tadpole").checked ? -7 : 7;
     canvas.color('black');
     canvas.background();
     canvas.color('white');
@@ -105,7 +106,7 @@ function draw() {
     canvas.lineWidth(2);
     for (var v of vehicles) {
         canvas.fillArc(v.pos.x, v.pos.y, 5);
-        canvas.line(v.pos.x, v.pos.y, v.pos.x + 7 * v.vel.x, v.pos.y + 7 * v.vel.y);
+        canvas.line(v.pos.x, v.pos.y, v.pos.x + mul * v.vel.x, v.pos.y + mul * v.vel.y);
     }
 }
 
