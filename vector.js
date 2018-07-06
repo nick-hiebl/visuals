@@ -87,7 +87,7 @@ class Vector {
     dist(other) {
         var x = this.x - other.x;
         var y = this.y - other.y;
-        return sqrt(sqr(x) + sqr(y));
+        return Math.sqrt(x * x + y * y);
     }
 
     static dist(a, b) {
