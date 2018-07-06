@@ -99,6 +99,7 @@ function update() {
 
 function draw() {
     var mul = document.getElementById("tadpole").checked ? -7 : 7;
+    var rainbow = document.getElementById("rainbow").checked;
     canvas.color('black');
     canvas.background();
     canvas.color('white');
@@ -108,6 +109,12 @@ function draw() {
     canvas.color('white');
     canvas.lineWidth(2);
     for (var v of vehicles) {
+        if (rainbow) {
+            var o = v.pos.copy();
+            o.sub(origin);
+            var col = 'hsl(' + map(o.heading, -Math.PI, Math.PI, 0, 360) + ', 100%, 60%)';
+            canvas.color(col);
+        }
         canvas.fillArc(v.pos.x, v.pos.y, 5);
         canvas.line(v.pos.x, v.pos.y, v.pos.x + mul * v.vel.x, v.pos.y + mul * v.vel.y);
     }
