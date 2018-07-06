@@ -1,13 +1,17 @@
 var vehicles;
 var canvas;
 var origin;
+var radius;
+var t = 0;
 
-var DISTANCE_STEERING = 50;
+var DISTANCE_STEERING = 5;
 
 var ROTATIONAL_STEERING = 3;
 
-var SPEED_LIMIT = 5;
-var STEERING_LIMIT = 5;
+var BUMP_STEERING = 5;
+
+var SPEED_LIMIT = 10;
+var STEERING_LIMIT = 0.1;
 
 function newVehicle() {
     return {
@@ -18,10 +22,11 @@ function newVehicle() {
 }
 
 function setup() {
+    radius = 300;
     canvas = new Canvas('canvas');
     origin = new Vector(400, 400);
     vehicles = [];
-    for (var i = 0; i < 60; i++) {
+    for (var i = 0; i < 120; i++) {
         vehicles.push(newVehicle());
     }
 
@@ -34,7 +39,7 @@ function distanceSteering(vehicle) {
     var v = vehicle.vel.copy();
     v.mul(5);
     way.sub(v);
-    var m = map(way.magnitude - 300, -300, 300, -DISTANCE_STEERING, DISTANCE_STEERING);
+    var m = map(way.magnitude - radius, -300, 300, -DISTANCE_STEERING, DISTANCE_STEERING);
     way.magnitude = m;
     way.sub(vehicle.vel);
     return way;
@@ -44,7 +49,7 @@ function rotationalSteering(vehicle) {
     var steering = vehicle.pos.copy();
     steering.sub(origin);
     steering.heading += Math.PI / 2;
-    steering.magnitude = ROTATIONAL_STEERING;
+    steering.magnitude = SPEED_LIMIT;
     steering.sub(vehicle.vel);
     return steering;
 }
@@ -60,6 +65,7 @@ function dontBump(vehicle, others) {
             desired.add(t);
         }
     }
+    desired.magnitude = 5;
     desired.sub(vehicle.vel);
     return desired;
 }
@@ -79,6 +85,8 @@ function updateVelocity(vehicle) {
 }
 
 function update() {
+    t += 0.005;
+    radius = 200 + 100 * Math.cos(t);
     for (var v of vehicles) {
         updateVelocity(v);
         v.pos.add(v.vel);
@@ -90,13 +98,14 @@ function draw() {
     canvas.color('black');
     canvas.background();
     canvas.color('white');
-    canvas.fillArc(400, 400, 300);
+    canvas.fillArc(400, 400, radius);
     canvas.color('black');
-    canvas.fillArc(400, 400, 299);
+    canvas.fillArc(400, 400, radius-1);
     canvas.color('white');
+    canvas.lineWidth(2);
     for (var v of vehicles) {
         canvas.fillArc(v.pos.x, v.pos.y, 5);
-        canvas.line(v.pos.x, v.pos.y, v.pos.x + 5 * v.vel.x, v.pos.y + 5 * v.vel.y);
+        canvas.line(v.pos.x, v.pos.y, v.pos.x + 7 * v.vel.x, v.pos.y + 7 * v.vel.y);
     }
 }
 
