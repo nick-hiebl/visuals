@@ -6,7 +6,7 @@ var t = 0;
 
 var DISTANCE_STEERING = 5;
 
-var ROTATIONAL_STEERING = 3;
+var ROTATIONAL_STEERING = 8;
 
 var BUMP_STEERING = 5;
 
@@ -51,6 +51,7 @@ function rotationalSteering(vehicle) {
     steering.heading += Math.PI / 2;
     steering.magnitude = SPEED_LIMIT;
     steering.sub(vehicle.vel);
+    steering.magnitude = map(steering.magnitude, 0, SPEED_LIMIT, 0, ROTATIONAL_STEERING);
     return steering;
 }
 
@@ -85,7 +86,9 @@ function updateVelocity(vehicle) {
 }
 
 function update() {
-    t += 0.005;
+    SPEED_LIMIT = document.getElementById("myRange").value;
+    // console.log()
+    t += 0.001;
     radius = 200 + 100 * Math.cos(t);
     for (var v of vehicles) {
         updateVelocity(v);
