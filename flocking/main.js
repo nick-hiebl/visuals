@@ -87,7 +87,6 @@ function updateVelocity(vehicle) {
 
 function update() {
     SPEED_LIMIT = document.getElementById("myRange").value;
-    // console.log()
     t += 0.001;
     radius = 200 + 100 * Math.cos(t);
     for (var v of vehicles) {
