@@ -112,7 +112,7 @@ function draw() {
         if (rainbow) {
             var o = v.pos.copy();
             o.sub(origin);
-            var col = 'hsl(' + map(o.heading, -Math.PI, Math.PI, 0, 360) + ', 100%, 60%)';
+            var col = 'hsl(' + map(v.vel.heading, -Math.PI, Math.PI, 0, 360) + ', 100%, 60%)';
             canvas.color(col);
         }
         canvas.fillArc(v.pos.x, v.pos.y, 5);
