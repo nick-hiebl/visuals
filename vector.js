@@ -94,6 +94,12 @@ class Vector {
         return a.dist(b);
     }
 
+    limit(value) {
+        if (this.magnitude > value) {
+            this.magnitude = value;
+        }
+    }
+
     copy() {
         return new Vector(this.x, this.y);
     }
