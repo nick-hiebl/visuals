@@ -49,6 +49,9 @@ class Vector {
         if (mag != 0) {
             this.x /= mag;
             this.y /= mag;
+        } else {
+            this.x = n;
+            this.y = 0;
         }
         return this;
     }
