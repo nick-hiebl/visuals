@@ -1,37 +1,42 @@
+var Zone = function() {
+    this.angle = Math.random() * Math.PI * 2;
+    this.range = Math.random() + 0.3;
+    this.radius = Math.random() * 150 + 100;
+    this.active = false;
+
+    this.draw = function(canvas, parent) {
+        canvas.lineWidth(1);
+        canvas.color(this.active ? 'blue' : 'green');
+
+        var v = new Vector(this.radius, 0);
+        v.heading = parent.heading + this.angle - this.range/2;
+        v.add(parent.position);
+        canvas.line(parent.position.x, parent.position.y, v.x, v.y);
+
+        var v = new Vector(this.radius, 0);
+        v.heading = parent.heading + this.angle + this.range/2;
+        v.add(parent.position);
+        canvas.line(parent.position.x, parent.position.y, v.x, v.y);
+
+        canvas.strokeArc(parent.position.x, parent.position.y,
+            this.radius, this.radius, 0,
+            parent.heading + this.angle - this.range/2,
+            parent.heading + this.angle + this.range/2);
+    };
+}
+
 var Agent = function(x, y) {
     this.position = new Vector(x, y);
     this.heading = 0;
-    this.zones = [{
-        a: 0,
-        r: 1,
-        l: Math.random() * 50 + 100
-    }, {
-        a: Math.random() * Math.PI * 2,
-        r: Math.random(),
-        l: Math.random() * 50 + 100
-    }, {
-        a: Math.random() * Math.PI * 2,
-        r: Math.random(),
-        l: Math.random() * 50 + 100
-    }];
+    this.zones = [
+        new Zone(), new Zone(), new Zone()
+    ];
 
     this.draw = function(canvas) {
         canvas.lineWidth(1);
         canvas.color('green');
         for (var zone of this.zones) {
-            var zone_r = zone.l;
-            v = new Vector(zone_r, 0);
-            v.heading = this.heading + zone.a - zone.r/2;
-            v.add(this.position);
-            canvas.line(this.position.x, this.position.y, v.x, v.y);
-
-            v = new Vector(zone_r, 0);
-            v.heading = this.heading + zone.a + zone.r/2;
-            v.add(this.position);
-            canvas.line(this.position.x, this.position.y, v.x, v.y);
-
-            canvas.strokeArc(this.position.x, this.position.y,
-                zone_r, zone_r, 0, this.heading + zone.a - zone.r/2, this.heading + zone.a + zone.r/2);
+            zone.draw(canvas, this);
         }
 
         canvas.color('red');
