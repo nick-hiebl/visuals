@@ -1,5 +1,5 @@
 var Zone = function() {
-    this.angle = Math.random() * Math.PI * 2;
+    this.angle = Math.random() * Math.PI * 0.1;
     this.range = Math.random() + 0.3;
     this.radius = Math.random() * 150 + 100;
     this.active = false;
@@ -22,6 +22,29 @@ var Zone = function() {
             this.radius, this.radius, 0,
             parent.heading + this.angle - this.range/2,
             parent.heading + this.angle + this.range/2);
+    };
+
+    this.collides = function(parent, target) {
+        if (parent.position.dist(target) > this.radius) {
+            return this.active = false;
+        }
+        var rel = target.copy();
+        rel.sub(parent.position);
+        rel.heading -= parent.heading;
+
+        var h = rel.heading;
+        if (Math.abs(h - this.angle) < this.range/2) {
+            return this.active = true;
+        }
+        h += 2 * Math.PI;
+        if (Math.abs(h - this.angle) < this.range/2) {
+            return this.active = true;
+        }
+        h -= 4 * Math.PI;
+        if (Math.abs(h - this.angle) < this.range/2) {
+            return this.active = true;
+        }
+        return this.active = false;
     };
 }
 
@@ -81,7 +104,9 @@ var Agent = function(x, y) {
         this.position.add(desired);
     };
 
-    this.update = function() {
-
+    this.update = function(target) {
+        for (var zone of this.zones) {
+            zone.collides(this, target.position);
+        }
     };
 }
