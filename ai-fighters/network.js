@@ -6,7 +6,7 @@ function sigmoid(x) {
     return 1 / (1 + Math.exp(-x));
 }
 
-var Perceptron = new function(inputs) {
+var Perceptron = function(inputs) {
     this.weights = [];
     for (var i = 0; i < inputs; i++) {
         this.weights.push(signedRand());
@@ -15,17 +15,17 @@ var Perceptron = new function(inputs) {
 
     this.result = 0;
 
-    var calculate = function(input) {
-        var total = bias;
-        for (var i = 0; i < weights.length; i++) {
-            total += input[i] * weights[i];
+    this.calculate = function(input) {
+        var total = this.bias;
+        for (var i = 0; i < input.length; i++) {
+            total += input[i] * this.weights[i];
         }
         this.result = sigmoid(total);
         return this.result;
     }
 }
 
-var Network = new function(inputs, outputs) {
+var Network = function(inputs, outputs) {
     this.inputs = [];
     for (var i = 0; i < inputs; i++) {
         this.inputs.push(new Perceptron(1));
