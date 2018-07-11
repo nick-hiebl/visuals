@@ -24,3 +24,27 @@ var Perceptron = new function(inputs) {
         return this.result;
     }
 }
+
+var Network = new function(inputs, outputs) {
+    this.inputs = [];
+    for (var i = 0; i < inputs; i++) {
+        this.inputs.push(new Perceptron(1));
+    }
+    this.outputs = [];
+    for (var i = 0; i < outputs; i++) {
+        this.outputs.push(new Perceptron(inputs));
+    }
+
+    this.process = function(inputs) {
+        var values = [];
+        for (var i = 0; i < inputs.length; i++) {
+            values[i] = this.inputs[i].calculate([inputs[i]]);
+        }
+        var results = [];
+        for (var i = 0; i < this.outputs.length; i++) {
+            results[i] = this.outputs[i].calculate(values);
+        }
+
+        return results;
+    }
+}
