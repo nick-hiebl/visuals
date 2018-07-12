@@ -37,6 +37,15 @@ function Canvas(id) {
         this.ctx.fill();
     }
 
+    this.fillSector = function(x, y, w, h, rotation, start, end) {
+        this.ctx.beginPath();
+        h = h || w;
+        this.ctx.ellipse(x, y, w, h, rotation || 0,
+            start || 0, end || 2 * Math.PI);
+        this.ctx.lineTo(x, y);
+        this.ctx.fill();
+    }
+
     this.strokeArc = function(x, y, w, h, rotation, start, end) {
         this.ctx.beginPath();
         h = h || w;
