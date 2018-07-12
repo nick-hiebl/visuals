@@ -25,7 +25,7 @@ function updateAgent(agent, nn, target) {
     for (var i = 0; i < input.length; i++) {
         input[i] = input[i] ? 1 : 0;
     }
-    console.log(input);
+    
     var action = nn.process(input);
     var turn = (action[0] - 0.5) * 2 * agentProperties.turnRate;
     var forward = (action[1] - 0.5) * 2 * agentProperties.forwardRate;
