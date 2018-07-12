@@ -6,19 +6,9 @@ var Zone = function() {
 
     this.draw = function(canvas, parent) {
         canvas.lineWidth(1);
-        canvas.color(this.active ? 'blue' : 'green');
+        canvas.color(this.active ? 'rgba(100, 100, 255, 20%)' : 'rgba(0, 255, 0, 6%)');
 
-        var v = new Vector(this.radius, 0);
-        v.heading = parent.heading + this.angle - this.range/2;
-        v.add(parent.position);
-        canvas.line(parent.position.x, parent.position.y, v.x, v.y);
-
-        var v = new Vector(this.radius, 0);
-        v.heading = parent.heading + this.angle + this.range/2;
-        v.add(parent.position);
-        canvas.line(parent.position.x, parent.position.y, v.x, v.y);
-
-        canvas.strokeArc(parent.position.x, parent.position.y,
+        canvas.fillSector(parent.position.x, parent.position.y,
             this.radius, this.radius, 0,
             parent.heading + this.angle - this.range/2,
             parent.heading + this.angle + this.range/2);
