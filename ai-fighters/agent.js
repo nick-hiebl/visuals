@@ -1,7 +1,7 @@
 var Zone = function() {
-    this.angle = Math.random() * Math.PI * 0.1;
-    this.range = Math.random() + 0.3;
-    this.radius = Math.random() * 150 + 100;
+    this.angle = Math.random() * Math.PI * 2;
+    this.range = Math.random() + 0.05;
+    this.radius = Math.random() * 350 + 100;
     this.active = false;
 
     this.draw = function(canvas, parent) {
@@ -51,18 +51,19 @@ var Zone = function() {
 var Agent = function(x, y) {
     this.position = new Vector(x, y);
     this.heading = 0;
-    this.zones = [
-        new Zone(), new Zone(), new Zone()
-    ];
+    this.zones = [];
+    for (var i = 0; i < 8; i++) {
+        this.zones.push(new Zone());
+    }
 
-    this.draw = function(canvas) {
-        canvas.lineWidth(1);
+    this.draw = function(canvas, color) {
+        canvas.lineWidth(0.3);
         canvas.color('green');
         for (var zone of this.zones) {
             zone.draw(canvas, this);
         }
 
-        canvas.color('red');
+        canvas.color(color);
         canvas.fillArc(this.position.x, this.position.y, 10);
         var v = new Vector(20, 0);
         v.heading = this.heading;
@@ -87,6 +88,17 @@ var Agent = function(x, y) {
         this.position.add(v);
     };
 
+    this.shoot = function(target) {
+        var rel = target.copy();
+        rel.sub(this.position);
+        rel.heading -= this.heading;
+
+        if (Math.abs(rel.y) < 5) {
+            return true;
+        }
+        return false;
+    }
+
     this.boundary = function(width, height, rate) {
         var desired = new Vector(0, 0);
         var d = 50;
@@ -104,9 +116,11 @@ var Agent = function(x, y) {
         this.position.add(desired);
     };
 
-    this.update = function(target) {
+    this.getCollision = function(target) {
+        var out = [];
         for (var zone of this.zones) {
-            zone.collides(this, target.position);
+            out.push(zone.collides(this, target.position));
         }
+        return out;
     };
 }
