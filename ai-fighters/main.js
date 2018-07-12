@@ -1,32 +1,45 @@
 var canvas;
-var agent;
-var target;
+var agent1, agent2;
+var nn1, nn2;
 
-var t;
+var agentProperties = {
+    turnRate: 0.1,
+    forwardRate: 3,
+    strafeRate: 3
+}
 
 function setup() {
     canvas = new Canvas("canvas");
-    agent = new Agent(canvas.width/2, canvas.height/2);
-    t = -1;
-    target = {
-        position: new Vector(300, 300)
-    };
+    agent1 = new Agent(canvas.width/2 + 100, canvas.height/2 - 100);
+    agent2 = new Agent(canvas.width/2 - 100, canvas.height/2 + 100);
+
+    // turn, forward, strafe, shoot
+    nn1 = new Network(8, 4);
+    nn2 = new Network(8, 4);
 
     addUpdate(update);
 }
 
+function updateAgent(agent, nn, target) {
+    var input = agent.getCollision(target);
+    for (var i = 0; i < input.length; i++) {
+        input[i] = input[i] ? 1 : 0;
+    }
+    console.log(input);
+    var action = nn.process(input);
+    var turn = (action[0] - 0.5) * 2 * agentProperties.turnRate;
+    var forward = (action[1] - 0.5) * 2 * agentProperties.forwardRate;
+    var strafe = (action[2] - 0.5) * 2 * agentProperties.strafeRate;
+    var shoot = action[3] > 0.5;
+
+    agent.turn(turn);
+    agent.forward(forward);
+    agent.strafe(strafe);
+}
+
 function update() {
-    t += 0.003;
-    // agent.turn(Math.sin(0.3282 * t) / 120 + Math.sin(t) / 100 + Math.sin(2.8834 * t) / 200);
-    // agent.forward(0.5 + Math.cos(t));
-    // agent.strafe(0.5 - Math.cos(t));
-    // agent.boundary(canvas.width, canvas.height, 2);
-    target.position.heading = t;
-    // console.log(target.position.heading);
-    target.position.magnitude = 100 + (Math.sin(t * 0.4) * 0.4 + Math.sin(t) * 0.6) * 80;
-    target.position.x += 400;
-    target.position.y += 400;
-    agent.update(target);
+    updateAgent(agent1, nn1, agent2);
+    updateAgent(agent2, nn2, agent1);
 
     draw();
 }
@@ -38,10 +51,8 @@ function draw() {
     canvas.color('white');
     canvas.fillRect(1, 1, canvas.width-2, canvas.height-2);
 
-    agent.draw(canvas);
-
-    canvas.color('black');
-    canvas.fillArc(target.position.x, target.position.y, 3);
+    agent1.draw(canvas, 'red');
+    agent2.draw(canvas, 'blue');
 }
 
 addSetup(setup);
