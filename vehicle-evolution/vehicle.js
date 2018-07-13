@@ -37,12 +37,25 @@ function Vehicle(x, y) {
     }
 
     this.seek = function(target, weight) {
+        if (target == null) return;
         var desired = target.copy();
         desired.sub(this.position);
         desired.magnitude = this.maxSpeed;
 
         this.applyDesired(desired, weight);
     };
+
+    this.seekNearest = function(targets, weight) {
+        var dist = Infinity;
+        var best = null;
+        for (var target of targets) {
+            if (this.position.dist(target) < dist) {
+                dist = this.position.dist(target);
+                best = target;
+            }
+        }
+        this.seek(best, weight);
+    }
 
     this.flee = function(target, weight) {
         var desired = this.position.copy();
