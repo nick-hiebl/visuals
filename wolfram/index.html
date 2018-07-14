@@ -1,0 +1,28 @@
+<title>Flocking</title>
+<style media="screen">
+    canvas {
+        z-index: -2;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+    #normal {
+        padding: 3px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        background-color: white;
+    }
+</style>
+<div id="normal">
+    <button type="button" name="button" onclick="setup(18)">Rule 18</button>
+    <button type="button" name="button" onclick="setup(22)">Rule 22</button>
+    <button type="button" name="button" onclick="setup(30)">Rule 30</button>
+    <button type="button" name="button" onclick="setup(45)">Rule 45</button>
+    <p>
+        <a href="https://github.com/nick-hiebl/visuals">See more.</a>
+    </p>
+</div>
+<canvas id="canvas" width="800" height="800"></canvas>
+<script type="text/javascript" src="../visual.js"></script>
+<script type="text/javascript" src="main.js"></script>
