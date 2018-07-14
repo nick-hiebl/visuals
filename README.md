@@ -16,5 +16,5 @@ A repository for all kinds of cool visuals, animations and visualisations.
 ### Flocking Logic
 [See here.](https://nick-hiebl.github.io/visuals/flocking/)
 
-### Wolfram Cellular Automata
+### [Wolfram Cellular Automata](#wolfram-automata)
 [See here.](https://nick-hiebl.github.io/visuals/wolfram/)
