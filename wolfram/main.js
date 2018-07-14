@@ -41,7 +41,7 @@ function setup(n) {
 
     draw();
 
-    rule = generate_rule(n || 110);
+    rule = generate_rule(n || 18);
 
     addUpdate(update);
 }
