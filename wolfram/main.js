@@ -46,7 +46,7 @@ function setup(n) {
     addUpdate(update);
 }
 
-function update() {
+function step() {
     t++;
     if (t < canvas.height + 3) {
         var temp = [0];
@@ -59,9 +59,19 @@ function update() {
     }
 }
 
+function update() {
+    if (document.getElementById("fast").checked) {
+        for (var i = 0; i < 15; i++) {
+            step();
+        }
+    } else {
+        step();
+    }
+}
+
 function draw() {
     canvas.color('black');
-    for (var i = 0; i < row.length; i++) {
+    for (var i = -offset; i < canvas.width - offset; i++) {
         if (row[i])
             canvas.fillRect(i + offset, t, 1, 1);
     }
