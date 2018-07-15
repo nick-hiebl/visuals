@@ -36,3 +36,9 @@ implemented. That is, rules which only care about the "average" of the
 preceding cells. This sounds like it is a huge loss of complexity, but
 it's actually still very powerful and capable of producing patterns much
 more rich and complex than those in the standard 2-state case.
+
+### [Continuous Cellular Automata](#continuous-cellular-automata)
+[See here.](https://nick-hiebl.github.io/visuals/wolfram-continuous/)
+This is an implementation of the same kinds of automata as above, except
+using continuous rather than discrete values. A simple visualisation of
+the function applied is shown in the top right.
