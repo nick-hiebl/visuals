@@ -4,7 +4,7 @@ var origin;
 var radius;
 var t = 0;
 
-var DISTANCE_STEERING = 5;
+var DISTANCE_STEERING = 35;
 
 var ROTATIONAL_STEERING = 8;
 
@@ -24,7 +24,7 @@ function newVehicle() {
 function setup() {
     radius = 300;
     canvas = new Canvas('canvas');
-    origin = new Vector(400, 400);
+    origin = new Vector(canvas.width/2, canvas.height/2);
     vehicles = [];
     for (var i = 0; i < 120; i++) {
         vehicles.push(newVehicle());
