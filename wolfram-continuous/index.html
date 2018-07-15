@@ -1,0 +1,28 @@
+<title>Wolfram Automata</title>
+<style media="screen">
+    canvas {
+        z-index: -2;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+    }
+    #normal {
+        padding: 3px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        background-color: white;
+    }
+    button {
+        width: 100%;
+    }
+</style>
+<div id="normal">
+    <p>
+        Fast? <input type="checkbox" id="fast" checked>
+        <a href="https://github.com/nick-hiebl/visuals#continuous-cellular-automata">See explanation.</a>
+    </p>
+</div>
+<canvas id="canvas" width="800" height="800"></canvas>
+<script type="text/javascript" src="../visual.js"></script>
+<script type="text/javascript" src="main.js"></script>
