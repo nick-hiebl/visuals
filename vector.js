@@ -20,6 +20,10 @@ class Vector {
         return new Vector(1, 0).rotate(Math.random() * 2 * Math.PI);
     }
 
+    static rand(l) {
+        return new Vector(l || 1, 0).rotate(Math.random() * 2 * Math.PI);
+    }
+
     add(other) {
         this.x += other.x;
         this.y += other.y;
