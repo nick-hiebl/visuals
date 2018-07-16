@@ -24,6 +24,8 @@ var Agent = function(size) {
                 v.add(this.moves[i+1]);
                 v.limit(2);
                 this.moves[i] = v;
+            } else if (Math.random() < mutationRate/2) {
+                this.moves[i] = Vector.rand(Math.random() * 1 + 1);
             }
         }
     }
