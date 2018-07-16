@@ -1,7 +1,7 @@
 var canvas;
 var pop;
 
-var POP_SIZE = 60;
+var POP_SIZE = 160;
 var GAME_LENGTH = 300;
 
 var states;
@@ -10,14 +10,18 @@ var tick;
 var goal;
 var endAtStep;
 
+var obstacles = [
+    {x: 60, y: 100, w: 400, h: 20}
+];
+
 function evaluate() {
     for (var i = 0; i < POP_SIZE; i++) {
         var s = this.states[i];
         var v = map(s.pos.dist(goal), 0, canvas.width + canvas.height, 100, 0);
         if (s.alive) {
-            v += map(s.endedOn, 0, GAME_LENGTH, 100, 0);
+            v += map(s.endedOn, 0, GAME_LENGTH, 100, -100);
         } else {
-            v += map(s.endedOn, 0, GAME_LENGTH, 0, 100);
+            v += map(s.endedOn, 0, GAME_LENGTH, -200, -100);
         }
         pop.rate(i, v);
     }
@@ -33,7 +37,7 @@ function reset() {
     states = [];
     for (var i = 0; i < POP_SIZE; i++) {
         states.push({
-            pos: new Vector(10, 10),
+            pos: new Vector(canvas.width/2, 10),
             alive: true,
             endedOn: -1
         });
@@ -43,9 +47,9 @@ function reset() {
 
 function setup() {
     canvas = new Canvas('canvas');
-    goal = new Vector(canvas.width/2, canvas.height/2);
+    goal = new Vector(canvas.width/2, canvas.height - 10);
 
-    endAtStep = 20;
+    endAtStep = 300;
 
     reset();
 
@@ -64,12 +68,21 @@ function update() {
             s.alive = false;
             s.endedOn = tick;
         }
+        else {
+            for (var o of obstacles) {
+                if (s.pos.x > o.x && s.pos.x < o.x + o.w &&
+                        s.pos.y > o.y && s.pos.y < o.y + o.h) {
+                    s.alive = false;
+                    s.endedOn = tick;
+                }
+            }
+        }
     }
 
     draw();
 
     tick++;
-    if (tick >= endAtStep || tick >= endAtStep) {
+    if (tick >= endAtStep || tick >= GAME_LENGTH) {
         if (pop.generations % 3 == 0) {
             endAtStep += 10;
         }
@@ -86,7 +99,13 @@ function draw() {
         canvas.fillArc(s.pos.x, s.pos.y, 2);
     }
     canvas.color('green');
+    canvas.fillArc(states[0].pos.x, states[0].pos.y, 2);
     canvas.fillArc(goal.x, goal.y, 5);
+
+    canvas.color('#05d');
+    for (var o of obstacles) {
+        canvas.fillRect(o.x, o.y, o.w, o.h);
+    }
 }
 
 addSetup(setup);
