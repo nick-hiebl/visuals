@@ -26,7 +26,7 @@ var Agent = function(size) {
 		}
 		for (var i = 0; i < numToSmooth; i++) {
 			var j = Math.floor(Math.random() * (this.size - 2)) + 1;
-			var v = this.moves[j-1];
+			var v = this.moves[j-1].copy();
 			v.add(this.moves[j+1]);
 			v.limit(2);
 			this.moves[j] = v;
