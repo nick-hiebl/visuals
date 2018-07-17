@@ -18,6 +18,12 @@ var Population = function(size, len) {
     this.rate = function(i, v) {
         this.pop[i].rating = v;
     }
+	
+	this.selectParent = function() {
+		var r = Math.random() * Math.random();
+		var m = Math.floor(r * this.size);
+		return this.pop[m];
+	}
 
     this.nextGeneration = function() {
         this.generations++;
@@ -27,9 +33,14 @@ var Population = function(size, len) {
         var newPop = [];
         newPop.push(this.pop[0]);
         while (newPop.length < this.size) {
-            var r = Math.random() * Math.random();
-            var m = Math.floor(r * this.size);
-            newPop.push(this.pop[m].child());
+            if (Math.random() < 0.6) {
+				var parentA = this.selectParent();
+				var parentB = this.selectParent();
+				
+				newPop.push(parentA.crossover(parentB));
+			} else {
+				newPop.push(this.selectParent().child());
+			}
         }
         this.pop = newPop;
     }
