@@ -32,6 +32,7 @@ var Population = function(size, len) {
         });
         var newPop = [];
         newPop.push(this.pop[0]);
+		newPop.push(new Agent(this.len).crossover(this.selectParent()));
         while (newPop.length < this.size) {
             if (Math.random() < 0.6) {
 				var parentA = this.selectParent();
