@@ -14,20 +14,29 @@ var Agent = function(size) {
         var mutationRate = 0.1;
         var mutationAmount = 1;
         var smoothRate = 0.1;
-        for (var i = 0; i < this.size; i++) {
-            if (Math.random() < mutationRate) {
-                this.moves[i].x += (2 * Math.random() - 1) * mutationAmount;
-                this.moves[i].y += (2 * Math.random() - 1) * mutationAmount;
-                this.moves[i].limit(2);
-            } else if (i > 0 && i < this.size - 1 && Math.random() < smoothRate) {
-                var v = this.moves[i-1];
-                v.add(this.moves[i+1]);
-                v.limit(2);
-                this.moves[i] = v;
-            } else if (Math.random() < mutationRate/2) {
-                this.moves[i] = Vector.rand(Math.random() * 1 + 1);
-            }
-        }
+		
+		var numToModify = Math.floor(Math.random() * mutationRate * this.size);
+		var numToSmooth = Math.floor(Math.random() * smoothRate * this.size);
+		
+		for (var i = 0; i < numToModify; i++) {
+			var j = Math.floor(Math.random() * this.size);
+			this.moves[j].x += (2 * Math.random() - 1) * mutationAmount;
+			this.moves[j].y += (2 * Math.random() - 1) * mutationAmount;
+			this.moves[j].limit(2);
+		}
+		for (var i = 0; i < numToSmooth; i++) {
+			var j = Math.floor(Math.random() * (this.size - 2)) + 1;
+			var v = this.moves[j-1];
+			v.add(this.moves[j+1]);
+			v.limit(2);
+			this.moves[j] = v;
+		}
+		
+		var numToOverwrite = Math.floor(Math.random() * mutationRate/2);
+		for (var i = 0; i < numToOverwrite; i++) {
+			var j = Math.floor(Math.random() * this.size);
+			this.moves[j] = Vector.rand(Math.random() * 1 + 1);
+		}
     }
 	
 	this.clone = function() {
