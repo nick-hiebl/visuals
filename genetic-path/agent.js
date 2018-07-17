@@ -29,15 +29,40 @@ var Agent = function(size) {
             }
         }
     }
+	
+	this.clone = function() {
+		var clone = new Agent(this.size);
+		clone.moves = [];
+		for (var v of this.moves) {
+			clone.moves.push(v.copy());
+		}
+		return clone;
+	}
 
     this.child = function() {
-        var child = new Agent(this.size);
-        child.moves = [];
-        for (var v of this.moves) {
-            child.moves.push(v.copy());
-        }
+        var child = this.clone();
         child.mutate();
 
         return child;
     }
+	
+	this.crossover = function(other) {
+		var child = other.clone();
+		
+		// Choose section to overwrite
+		var left = Math.floor(Math.random() * this.size);
+		var right = Math.floor(Math.random() * this.size);
+		
+		if (left > right) {
+			right += this.size;
+		}
+		// Overwrite that range
+		for (var i = left; i < right; i++) {
+			// Wrap to actual range
+			let t = i % this.size;
+			child.moves[t] = this.moves[t].copy();
+		}
+		
+		return child;
+	}
 }
