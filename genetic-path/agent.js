@@ -13,7 +13,7 @@ var Agent = function(size) {
     this.mutate = function() {
         var mutationRate = 0.1;
         var mutationAmount = 1;
-        var smoothRate = 0.1;
+        var smoothRate = 0.2;
 		
 		var numToModify = Math.floor(Math.random() * mutationRate * this.size);
 		var numToSmooth = Math.floor(Math.random() * smoothRate * this.size);
@@ -26,10 +26,9 @@ var Agent = function(size) {
 		}
 		for (var i = 0; i < numToSmooth; i++) {
 			var j = Math.floor(Math.random() * (this.size - 2)) + 1;
-			var v = this.moves[j-1].copy();
-			v.add(this.moves[j+1]);
-			v.limit(2);
-			this.moves[j] = v;
+			this.moves[j].add(this.moves[j-1]);
+			this.moves[j].add(this.moves[j+1]);
+			this.moves[j].limit(2);
 		}
 		
 		var numToOverwrite = Math.floor(Math.random() * mutationRate/2);
