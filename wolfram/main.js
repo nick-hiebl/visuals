@@ -34,7 +34,7 @@ function setup(n) {
     var len = canvas.width + canvas.height * 2 + 3;
     row = new Array(len).fill(0);
     row[Math.floor(len/2)] = 1;
-    offset = canvas.width / 2 - Math.floor(len/2);
+    offset = Math.floor(canvas.width / 2) - Math.floor(len / 2);
 
     canvas.color('white');
     canvas.background();
