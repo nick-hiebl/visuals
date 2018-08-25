@@ -51,8 +51,7 @@ function setup(n) {
     draw();
 
     var ruleNo = makeRule(0, 2, 1, 1, 2, 1, 3, 3);
-    // Wiggle = makeRule(2, 2, 1, 2, 2, 0, 3, 1);
-    console.log(ruleNo);
+
     rule = generate_rule(n || ruleNo);
 
     addUpdate(update);
@@ -67,6 +66,8 @@ function step() {
     } else {
         pos -= 1;
     }
+    left = Math.min(pos, left);
+    right = Math.max(pos, right);
     draw();
 }
 
@@ -92,11 +93,8 @@ function draw() {
 
 var table = document.createElement("table");
 var rules = [
-    [ 993,  996, 1020, 1038],
-    [1041, 1074, 1086, 1329],
-    [ 948, 1749,  177,  912],
-    [2040, 1635, 2049, 1599],
-    [ 357,  600, 2058]
+    [ 9631, 42637, 32147],
+    [42029, 41629, 44303]
 ];
 function make_onclick(n) {
     return function() {
