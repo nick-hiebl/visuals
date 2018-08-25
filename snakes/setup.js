@@ -1,5 +1,6 @@
 var canvas;
 var target;
+var t;
 
 var segments = [];
 
@@ -14,18 +15,21 @@ function draw() {
 }
 
 function update() {
-    // segments[0].pos.y += 1;
-    var target = new Vector(canvas.width/2, canvas.height/2);
-    for (var i = 1; i < segments.length; i++) {
+    target = new Vector(canvas.width/2, canvas.height/2);
+    let temp = new Vector(150 + 50 * Math.cos(3.193*t), 0);
+    temp.heading = t;
+    t += 0.02;
+    target.add(temp);
+    for (var i = 0; i < segments.length; i++) {
         let curr = segments[i];
-        let n;
+        var n;
         if (i == 0) {
             n = target;
         } else {
-            n = segments[i - 1];
+            n = segments[i - 1].pos;
         }
 
-        let d = n.pos.copy().sub(curr.pos);
+        let d = n.copy().sub(curr.pos);
 
         curr.dir.heading = d.heading;
         curr.pos.add(d);
@@ -45,8 +49,10 @@ function newSegment(position, length) {
 function setup() {
     canvas = new Canvas('canvas');
 
+    t = 0;
+
     var total = 0;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
         var l = 20;
         segments.push(newSegment(
             new Vector(canvas.width/2 - total, canvas.height/2), l
