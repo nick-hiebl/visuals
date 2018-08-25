@@ -1,4 +1,5 @@
 var canvas;
+var target;
 
 var segments = [];
 
@@ -13,6 +14,24 @@ function draw() {
 }
 
 function update() {
+    // segments[0].pos.y += 1;
+    var target = new Vector(canvas.width/2, canvas.height/2);
+    for (var i = 1; i < segments.length; i++) {
+        let curr = segments[i];
+        let n;
+        if (i == 0) {
+            n = target;
+        } else {
+            n = segments[i - 1];
+        }
+
+        let d = n.pos.copy().sub(curr.pos);
+
+        curr.dir.heading = d.heading;
+        curr.pos.add(d);
+        curr.pos.sub(curr.dir);
+    }
+
     draw();
 }
 
