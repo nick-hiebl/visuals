@@ -101,6 +101,14 @@ class Vector {
         return a.dist(b);
     }
 
+    static diff(a, b) {
+        return new Vector(a.x - b.x, a.y - b.y);
+    }
+
+    static sum(a, b) {
+        return new Vector(a.x + b.x, a.y + b.y);
+    }
+
     limit(value) {
         if (this.magnitude > value) {
             this.magnitude = value;
