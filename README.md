@@ -1,23 +1,23 @@
 # visuals
 A repository for all kinds of cool visuals, animations and visualisations.
 
-### Minimal Spanning Tree
-[See here.](https://nick-hiebl.github.io/visuals/mst/)
+### GitHub Icon Generator
+Check out the [GitHub icon generator.](https://nick-hiebl.github.io/visuals/git-icons/)
 
-### Dinosaur Game
-[See here.](https://nick-hiebl.github.io/visuals/dino/)
+### Minimal Spanning Tree
+Check out the [minimal spanning tree generator.](https://nick-hiebl.github.io/visuals/mst/)
 
 ### Traveling Salesman Problem
-[See here.](https://nick-hiebl.github.io/visuals/tsp/)
+Check out the [Travelling Salesperson solver.](https://nick-hiebl.github.io/visuals/tsp/)
 
 ### Braitenberg Vehicle Simulation
-[See here.](https://nick-hiebl.github.io/visuals/vehicles/)
+Check out the [Braitenberg vehicle simulation](https://nick-hiebl.github.io/visuals/vehicles/)
 
 ### Flocking Logic
-[See here.](https://nick-hiebl.github.io/visuals/flocking/)
+Check out the [flocking simulation.](https://nick-hiebl.github.io/visuals/flocking/)
 
 ### [Wolfram Cellular Automata](#wolfram-cellular-automata)
-[See here.](https://nick-hiebl.github.io/visuals/wolfram/)
+Check out the [Wolfram cellular automata.](https://nick-hiebl.github.io/visuals/wolfram/)
 This is an implementation of cellular automata as described in Stephen
 Wolfram's book "A New Kind of Science". Rules are given codes which are
 based upon responses for a cell to the three cells above it. The codes
@@ -27,7 +27,7 @@ some explanation and analysis can be found in [places online](http://mathworld.w
 as well as Wolfram's textbook itself.
 
 ### [3 State Cellular Automata](#3-state-cellular-automata)
-[See here.](https://nick-hiebl.github.io/visuals/wolfram-3/)
+Check out the [3-state cellular automata.](https://nick-hiebl.github.io/visuals/wolfram-3/)
 This is an implementation of a similar kind of automata as above, but
 for a 3-state case, where each tile can either be white, blue or black.
 This would result in an enormous amount of possible rules however and a
@@ -38,7 +38,7 @@ it's actually still very powerful and capable of producing patterns much
 more rich and complex than those in the standard 2-state case.
 
 ### [Continuous Cellular Automata](#continuous-cellular-automata)
-[See here.](https://nick-hiebl.github.io/visuals/wolfram-continuous/)
+Check out the [continuous cellular automata.](https://nick-hiebl.github.io/visuals/wolfram-continuous/)
 This is an implementation of the same kinds of automata as above, except
 using continuous rather than discrete values. A simple visualisation of
 the function applied is shown in the top right.
