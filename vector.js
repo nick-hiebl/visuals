@@ -97,6 +97,12 @@ class Vector {
         return Math.sqrt(x * x + y * y);
     }
 
+    sqrDist(other) {
+        const x = this.x - other.x;
+        const y = this.y - other.y;
+        return x * x + y * y;
+    }
+
     static dist(a, b) {
         return a.dist(b);
     }

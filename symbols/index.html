@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symbols</title>
+    <style>
+      #container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+      img {
+        margin: 10px;
+        image-rendering: optimizeSpeed;
+        image-rendering: -moz-crisp-edges;
+        image-rendering: -o-crisp-edges;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: pixelated;
+      }
+      #errors {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Symbols</h1>
+    <div id="errors"></div>
+    <p>
+      Generating <span id="count">100 icons</span> consisting of
+      a <span id="grid">11 x 11</span> grid
+      of <span id="scale">10</span>px squares.
+    </p>
+    <p>
+      I want <input placeholder="100" id="form-count" /> icons which are a grid of
+      size <input placeholder="10" id="form-tiles" /> with each square
+      being <input placeholder="11" id="form-scale" /> px.
+    </p>
+    <p><a id="link" href="">Check out my icons</a></p>
+    <div id="container"></div>
+    <script src="./index.js"></script>
+  </body>
+</html>

@@ -73,6 +73,14 @@ function Canvas(id) {
     this.lineWidth = function(width) {
         this.ctx.lineWidth = width;
     }
+
+    this.translate = function(x, y) {
+        this.ctx.translate(x, y);
+    }
+
+    this.rotate = function(angle) {
+        this.ctx.rotate(angle);
+    }
 }
 
 var SETUPS = [];
@@ -114,3 +122,21 @@ window.onload = function() {
 
     beginLoop();
 };
+
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}

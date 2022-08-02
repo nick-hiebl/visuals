@@ -4,6 +4,15 @@ A repository for all kinds of cool visuals, animations and visualisations.
 ### GitHub Icon Generator
 Check out the [GitHub icon generator.](https://nick-hiebl.github.io/visuals/git-icons/)
 
+### Alien Symbol Generator
+Check out the [Alien symbol generator.](https://nick-hiebl.github.io/visuals/symbols/)
+
+### Snake Battle Game
+Check out the [snake battle game.](https://nick-hiebl.github.io/games/snake-train/)
+
+### Cartpole Robotics Simulation
+Check out the [cartpole robotics simulation.](https://nick-hiebl.github.io/visuals/robotics/cartpole/)
+
 ### Minimal Spanning Tree
 Check out the [minimal spanning tree generator.](https://nick-hiebl.github.io/visuals/mst/)
 
@@ -11,10 +20,20 @@ Check out the [minimal spanning tree generator.](https://nick-hiebl.github.io/vi
 Check out the [Travelling Salesperson solver.](https://nick-hiebl.github.io/visuals/tsp/)
 
 ### Braitenberg Vehicle Simulation
-Check out the [Braitenberg vehicle simulation](https://nick-hiebl.github.io/visuals/vehicles/)
+Check out the [Braitenberg vehicle simulation.](https://nick-hiebl.github.io/visuals/vehicles/)
 
 ### Flocking Logic
 Check out the [flocking simulation.](https://nick-hiebl.github.io/visuals/flocking/)
+
+### Weird binary tree
+This is incomplete and a little broken.
+Check out the [weird binary tree.](https://nick-hiebl.github.io/visuals/tree/floating-binary-tree/)
+
+### K-means basic
+Check out the [basic k-means toy.](https://nick-hiebl.github.io/visuals/image/k-means/)
+
+### K-means with image
+Check out the [image k-means colour chooser.](https://nick-hiebl.github.io/visuals/image/image-k-means/)
 
 ### [Wolfram Cellular Automata](#wolfram-cellular-automata)
 Check out the [Wolfram cellular automata.](https://nick-hiebl.github.io/visuals/wolfram/)

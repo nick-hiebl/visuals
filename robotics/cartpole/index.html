@@ -1,0 +1,21 @@
+<title>Robotics - Cartpole</title>
+<div style="max-width: 100%; width: 804px; margin: auto">
+    <canvas id="canvas" width="800" height="800"></canvas>
+</div>
+<script type="text/javascript" src="../../visual.js"></script>
+<script type="text/javascript" src="../../vector.js"></script>
+<script type="text/javascript" src="main.js"></script>
+<div style="min-width: 400px; margin: auto; width: 50%">
+    <p>
+        Include error integral? <input type="checkbox" id="error-integral" checked>
+        Rainbow? <input type="checkbox" id="rainbow">
+        <button onclick="reset()">reset</button>
+    </p>
+    <p>
+        Initial offset? <input style="width: 100%" type="range" value="10" min="0" max="50" class="slider" id="initial-offset">
+    </p>
+    <p>
+        Dampness? <input style="width: 100%" type="range" value="20" min="0" max="100" class="slider" id="dampness">
+    </p>
+    <a href="https://github.com/nick-hiebl/visuals">See more.</a>
+</div>
