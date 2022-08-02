@@ -20,11 +20,6 @@ function clamp(x, low, high) {
 
 const BAUBLE_WIDTH = 10;
 
-const COLORS = {
-    normal: '#f08',
-    bend: 'gray',
-}
-
 function baseFollow(segment, goal) {
     let d = Vector.diff(goal, segment.pos);
     segment.dir.heading = d.heading;
@@ -69,16 +64,23 @@ function closestEnemy({ enemies }, pos) {
     return closest;
 }
 
-function actionSegment(battleState, pos, item) {
+function actionSegment(battleState, pos, item, actionType) {
     if (!item) {
         return;
     }
 
-    console.log('processing item');
-
     switch (item.itemType) {
-        case 0:
+        case 0: // RED
+            if (actionType !== 'shoot') {
+                return;
+            }
+
             const targetedEnemy = closestEnemy(battleState, pos);
+
+            if (!targetedEnemy) {
+                return;
+            }
+
             const vel = Vector.diff(targetedEnemy.pos, pos);
             vel.magnitude = PROJECTILE_SPEED;
             battleState.projectiles.push({
@@ -97,12 +99,12 @@ function eatItem(battleState, newItem) {
     for (const segment of battleState.segments) {
         const swallowingItem = segment.item;
         segment.item = previousItem;
-        actionSegment(battleState, segment.pos, segment.item);
+        actionSegment(battleState, segment.pos, segment.item, segment.actionType);
         previousItem = swallowingItem;
     }
 
     battleState.headItem = newItem;
-    actionSegment(battleState, battleState.head, newItem);
+    actionSegment(battleState, battleState.head, newItem, 'shoot');
 }
 
 let VEL = 180;
@@ -129,6 +131,7 @@ function update(dur) {
     headToMouse.heading -= angle;
     vel.heading += clamp(headToMouse.heading, -turnRate, turnRate) + Math.random() * 0.001;
 
+    // Self collision un-forcing code
     // for (const segment of segments.slice(2)) {
     //     const diff = Vector.diff(battleState.head, segment.pos);
     //     const dist = diff.magnitude;
@@ -146,7 +149,7 @@ function update(dur) {
     let previous = head;
     let prevSegment = undefined;
     for (const segment of segments) {
-        switch (segment.kind) {
+        switch (segment.connectionType) {
             case 'normal':
                 normalFollow(segment, previous);
                 break;
@@ -155,7 +158,7 @@ function update(dur) {
                 break;
             default:
                 if (!indicatedError) {
-                    console.error('Handling unexpected segment type:', segment.kind);
+                    console.error('Handling unexpected segment type:', segment.connectionType);
                     indicatedError = true;
                 }
                 normalFollow(segument, previous);
@@ -202,13 +205,25 @@ function update(dur) {
         enemy.pos.add(move);
     }
 
-    for (const [projectile, remove] of iterWithRemoval(battleState.projectiles)) {
-        const step = projectile.vel.copy();
+    for (const [{ pos, vel }, remove] of iterWithRemoval(battleState.projectiles)) {
+        const step = vel.copy();
         step.mul(delta);
-        projectile.pos.add(step);
+        pos.add(step);
 
-        if (isOffscreen(projectile.pos)) {
+        if (isOffscreen(pos)) {
             remove();
+            continue;
+        }
+
+        const target = closestEnemy(battleState, pos);
+
+        if (target && pos.sqrDist(target.pos) < BAUBLE_WIDTH * BAUBLE_WIDTH) {
+            remove();
+            // Strike enemy
+            target.hp -= 1;
+            if (target.hp <= 0) {
+                battleState.enemies = battleState.enemies.filter((enemy) => enemy !== target);
+            }
         }
     }
 
@@ -219,11 +234,12 @@ function choice(list) {
     return list[Math.floor(Math.random() * list.length)];
 }
 
-function newSegment(position, length, kind = 'normal') {
+function newSegment(position, length, connectionType = 'normal') {
     return {
         pos: position,
         dir: new Vector(length, 0),
-        kind,
+        connectionType,
+        actionType: choice(['shoot', 'blank']),
         bendOffset: choice([-Math.PI / 2, -Math.PI / 4, Math.PI / 4, Math.PI / 2]),
         item: undefined,
     };
@@ -243,7 +259,7 @@ function initSnake() {
     const bentIndex2 = Math.random() > 0.7 ? Math.floor(Math.random() * (NUM_SEGMENTS - 1) + 1) : -10;
     for (let i = 0; i < NUM_SEGMENTS; i++) {
         battleState.segments.push(newSegment(
-            new Vector(canvas.width/2 - i * SEGMENT_LENGTH, canvas.height/2),
+            new Vector(canvas.width / 2 - i * SEGMENT_LENGTH, canvas.height / 2),
             SEGMENT_LENGTH,
             (i == bentIndex || i == bentIndex2) ? 'bend' : undefined,
         ));
@@ -265,18 +281,18 @@ function* iterWithRemoval(list) {
 }
 
 function initItems() {
-    const ROWS = 5;
-    const COLS = 8;
+    const ROWS = 7;
+    const COLS = 10;
     const ROW_H = canvas.height / ROWS;
     const COL_W = canvas.width / COLS;
     for (const [i, j] of range2D(ROWS, COLS)) {
         const x = i * COL_W + (0.5 * 0.56 + Math.random() * 0.44) * COL_W;
         const y = j * ROW_H + (0.5 * 0.56 + Math.random() * 0.44) * ROW_H;
 
-        const hue = choice([0, 90, 180, 270]);
+        const hue = choice([0, 90, 270]);
         battleState.items.push({
             pos: new Vector(x, y),
-            color: `hsl(${hue}, 100%, 70%)`,
+            color: `hsl(${hue}, 100%, 50%)`,
             itemType: hue,
         });
     }
@@ -316,6 +332,8 @@ function initEnemies() {
             pos: randomEdgePosition(canvas),
             timer: 0,
             maxTime: Math.random() * 3 + 2,
+            maxHp: 5,
+            hp: 5,
         });
     }
 }
