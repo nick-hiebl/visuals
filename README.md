@@ -8,7 +8,7 @@ Check out the [GitHub icon generator.](https://nick-hiebl.github.io/visuals/git-
 Check out the [Alien symbol generator.](https://nick-hiebl.github.io/visuals/symbols/)
 
 ### Snake Battle Game
-Check out the [snake battle game.](https://nick-hiebl.github.io/games/snake-train/)
+Check out the [snake battle game.](https://nick-hiebl.github.io/visuals/games/snake-train/)
 
 ### Cartpole Robotics Simulation
 Check out the [cartpole robotics simulation.](https://nick-hiebl.github.io/visuals/robotics/cartpole/)
