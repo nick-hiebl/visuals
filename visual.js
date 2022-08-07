@@ -1,7 +1,7 @@
 function Canvas(id) {
     this.cnv = document.querySelector('canvas#' + id);
 
-    this.ctx = this.cnv.getContext('2d');
+    this.ctx = this.cnv.getContext('2d', { alpha: false });
     this.width = this.cnv.width;
     this.height = this.cnv.height;
 

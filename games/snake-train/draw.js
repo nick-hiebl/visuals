@@ -36,12 +36,6 @@ function drawEnemies(canvas, battleState) {
     }
 }
 
-
-const COLORS = {
-    shoot: '#f08',
-    blank: 'gray',
-}
-
 function drawSegment(canvas, pos, item, segment) {
     canvas.color(COLORS[segment ? segment.actionType : 'shoot']);
     canvas.fillArc(pos.x, pos.y, BAUBLE_WIDTH);
@@ -62,19 +56,8 @@ function drawSegment(canvas, pos, item, segment) {
     }
 }
 
-function drawSnake(canvas, head, headItem, segments) {
-    canvas.color(COLORS['normal']);
-    // const head = Vector.sum(segments[0].pos, segments[0].dir);
-    // canvas.fillArc(head.x, head.y, BAUBLE_WIDTH);
-    drawSegment(canvas, head, headItem);
-
-    for (const segment of segments) {
-        // canvas.color(COLORS[s.connectionType] || 'white');
-        // canvas.line(s.pos.x, s.pos.y,
-        //     s.pos.x + s.dir.x, s.pos.y + s.dir.y);
-        // canvas.fillArc(s.pos.x, s.pos.y, BAUBLE_WIDTH);
-        drawSegment(canvas, segment.pos, segment.item, segment);
-    }
+function drawSnake(canvas, battleState) {
+    battleState.snake.draw(canvas);
 }
 
 function drawProjectiles(canvas, battleState) {
@@ -100,7 +83,7 @@ function draw(canvas, battleState) {
     
     drawItems(canvas, battleState.items);
     drawEnemies(canvas, battleState);
-    drawSnake(canvas, battleState.head, battleState.headItem, battleState.segments);
+    drawSnake(canvas, battleState);
     drawProjectiles(canvas, battleState);
 
     drawTimer(canvas, battleState);
