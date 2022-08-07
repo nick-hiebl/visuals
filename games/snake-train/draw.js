@@ -1,7 +1,27 @@
-function drawItems(canvas, items) {
+function getItemsByColor(items) {
+    const itemsByColor = {};
+
     for (const item of items) {
-        canvas.color(item.color);
-        canvas.fillArc(item.pos.x, item.pos.y, BAUBLE_WIDTH * 0.8);
+        preValue = itemsByColor[item.color];
+        itemsByColor[item.color] = preValue ? preValue.concat(item) : [item];
+    }
+
+    return itemsByColor;
+}
+
+function drawItems(canvas, items) {
+    const itemsByColor = getItemsByColor(items)
+    for (const color of Object.keys(itemsByColor)) {
+        canvas.ctx.fillStyle = color;
+        canvas.ctx.beginPath();
+        for (const item of itemsByColor[color]) {
+            // canvas.ctx.fillStyle = item.color;
+            canvas.ctx.moveTo(item.pos.x, item.pos.y);
+            // canvas.fillArc(item.pos.x, item.pos.y, BAUBLE_WIDTH * 0.8);
+            canvas.ctx.ellipse(item.pos.x, item.pos.y, BAUBLE_WIDTH * 0.8, BAUBLE_WIDTH * 0.8, 0, 0, 2 * Math.PI);
+        }
+        canvas.ctx.closePath();
+        canvas.ctx.fill();
     }
 }
 
@@ -57,7 +77,9 @@ function drawSegment(canvas, pos, item, segment) {
 }
 
 function drawSnake(canvas, battleState) {
-    battleState.snake.draw(canvas);
+    for (const segment of battleState.snake.iterate()) {
+        segment.draw(canvas);
+    }
 }
 
 function drawProjectiles(canvas, battleState) {

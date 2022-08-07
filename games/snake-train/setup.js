@@ -155,7 +155,7 @@ function initItems() {
 
         const hue = choice([0, 90, 270]);
         battleState.items.push({
-            pos: new Vector(x, y),
+            pos: new Vector(Math.floor(x), Math.floor(y)),
             color: `hsl(${hue}, 100%, 50%)`,
             itemType: hue,
         });
